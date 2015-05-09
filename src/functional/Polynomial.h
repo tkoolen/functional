@@ -17,9 +17,6 @@ public:
   typedef std::complex<RealScalar> RootType;
   typedef Eigen::Matrix<RootType, Eigen::Dynamic, 1> RootsType;
 
-  template <typename T>
-  using ResultType = ProductType<CoefficientType, T>;
-
 private:
   CoefficientsType coefficients;
 
@@ -41,16 +38,16 @@ public:
 
   CoefficientsType const& getCoefficients() const;
 
+  // adapted from Eigen/unsupported
   template<typename T> // can be different from both CoefficientsType and RealScalar
-  ResultType<T> operator() (const T& t) const
+  auto operator() (const T& t) const -> ProductType<CoefficientType, T>
   {
-    // adapted from Eigen/unsupported
+    typedef ProductType<CoefficientType, T> ResultType;
     typedef typename Eigen::NumTraits<T>::Real Real;
-
     
     if (Eigen::numext::abs2(t) <= Real(1) ){
       // horner
-      ResultType<T> val = coefficients[coefficients.size() - 1];
+      ResultType val = coefficients[coefficients.size() - 1];
       for (Eigen::DenseIndex i = coefficients.size() - 2; i >= 0; --i) {
         val = val * t + coefficients[i];
       }
@@ -59,12 +56,12 @@ public:
     else
     {
       // stabilized horner
-      ResultType<T> val = coefficients[0];
-      ResultType<T> inv_x = T(1) / t;
+      ResultType val = coefficients[0];
+      ResultType inv_x = T(1) / t;
       for (Eigen::DenseIndex i = 1; i < coefficients.size(); ++i) {
         val = val * inv_x + coefficients[i];
       }
-      return std::pow(t, (ResultType<T>) (static_cast<int>(coefficients.size() - 1))) * val;
+      return std::pow(t, (ResultType) (static_cast<int>(coefficients.size() - 1))) * val;
     }    
   }
 

@@ -4,6 +4,6 @@ add_executable(testPolynomial testPolynomial.cpp)
 target_link_libraries(testPolynomial functional)
 add_test(NAME testPolynomial COMMAND testPolynomial)
 
-add_executable(testPiecewisePolynomial testPiecewisePolynomial.cpp)
+add_executable(testPiecewisePolynomial testPiecewise.cpp)
 target_link_libraries(testPiecewisePolynomial functional)
 add_test(NAME testPiecewisePolynomial COMMAND testPiecewisePolynomial)
