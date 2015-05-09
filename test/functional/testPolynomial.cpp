@@ -52,14 +52,14 @@ void testOperators() {
     poly1_times_poly1 *= poly1_times_poly1;
 
     double t = uniform(generator);
-    valuecheck(sum.value(t), poly1.value(t) + poly2.value(t), 1e-8);
-    valuecheck(difference.value(t), poly2.value(t) - poly1.value(t), 1e-8);
-    valuecheck(product.value(t), poly1.value(t) * poly2.value(t), 1e-8);
-    valuecheck(poly1_plus_scalar.value(t), poly1.value(t) + scalar, 1e-8);
-    valuecheck(poly1_minus_scalar.value(t), poly1.value(t) - scalar, 1e-8);
-    valuecheck(poly1_scaled.value(t), poly1.value(t) * scalar, 1e-8);
-    valuecheck(poly1_div.value(t), poly1.value(t) / scalar, 1e-8);
-    valuecheck(poly1_times_poly1.value(t), poly1.value(t) * poly1.value(t), 1e-8);
+    valuecheck(sum(t), poly1(t) + poly2(t), 1e-8);
+    valuecheck(difference(t), poly2(t) - poly1(t), 1e-8);
+    valuecheck(product(t), poly1(t) * poly2(t), 1e-8);
+    valuecheck(poly1_plus_scalar(t), poly1(t) + scalar, 1e-8);
+    valuecheck(poly1_minus_scalar(t), poly1(t) - scalar, 1e-8);
+    valuecheck(poly1_scaled(t), poly1(t) * scalar, 1e-8);
+    valuecheck(poly1_div(t), poly1(t) / scalar, 1e-8);
+    valuecheck(poly1_times_poly1(t), poly1(t) * poly1(t), 1e-8);
   }
 }
 
@@ -76,7 +76,7 @@ void testRoots() {
     auto roots = poly.roots();
     valuecheck<DenseIndex>(roots.rows(), poly.getDegree());
     for (int i = 0; i < roots.size(); i++) {
-      auto value = poly.value(roots[i]);
+      auto value = poly(roots[i]);
       valuecheck(std::abs(value), 0.0, 1e-8);
     }
   }
@@ -89,10 +89,10 @@ void testEvalType() {
   VectorXd coeffs = VectorXd::Random(int_distribution(generator));
   Polynomial<double> poly(coeffs);
 
-  auto valueIntInput = poly.value(1);
+  auto valueIntInput = poly(1);
   valuecheck(typeid(decltype(valueIntInput)) == typeid(double), true);
 
-  auto valueComplexInput = poly.value(std::complex<double>(1.0, 2.0));
+  auto valueComplexInput = poly(std::complex<double>(1.0, 2.0));
   valuecheck(typeid(decltype(valueComplexInput)) == typeid(std::complex<double>), true);
 }
 
@@ -118,7 +118,7 @@ void testPolynomialMatrix() {
   for (int row = 0; row < A.rows(); ++row) {
     for (int col = 0; col < A.cols(); ++col) {
       double t = uniform(generator);
-      valuecheck(sum(row, col).value(t), A(row, col).value(t) + C(row, col).value(t), 1e-8);
+      valuecheck(sum(row, col)(t), A(row, col)(t) + C(row, col)(t), 1e-8);
     }
   }
 

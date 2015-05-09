@@ -1,9 +1,7 @@
 #ifndef TESTUTIL_H_
 #define TESTUTIL_H_
 
-#if !defined(WIN32) && !defined(WIN64)
 #include <chrono>
-#endif
 
 #include <Eigen/Core>
 #include <sstream>

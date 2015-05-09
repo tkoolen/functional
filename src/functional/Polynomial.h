@@ -43,7 +43,7 @@ public:
   CoefficientsType const& getCoefficients() const;
 
   template<typename T> // can be different from both CoefficientsType and RealScalar
-  typename Product<CoefficientType, T>::type value(const T& t) const
+  typename Product<CoefficientType, T>::type operator() (const T& t) const
   {
     // adapted from Eigen/unsupported
     typedef typename Product<CoefficientType, T>::type ProductType;
