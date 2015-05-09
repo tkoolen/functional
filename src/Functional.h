@@ -7,6 +7,7 @@
 
 #include "functional/Typedefs.h"
 #include "functional/Polynomial.h"
+#include "functional/LTIHomogeneousSolution.h"
 #include "functional/Piecewise.h"
 #include "functional/Traits.h"
 

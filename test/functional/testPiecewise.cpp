@@ -63,16 +63,16 @@ void testPiecewisePolynomial() {
   testIntegralAndDerivative<double>(createTestPiecewisePolynomial<double>(), value_at_start_time);
 }
 
-template <typename Scalar>
-void testPiecewisePolynomialMatrix() {
-
-}
+//template <typename Scalar>
+//void testPiecewisePolynomialMatrix() {
+//
+//}
 
 int main (int argc, char *argv[])
 {
   testConstantValue<double>();
   testPiecewisePolynomial<double>();
-  testPiecewisePolynomialMatrix<float>();
+//  testPiecewisePolynomialMatrix<float>();
 
   std::cout << is_differentiable<double>::value << std::endl;
   std::cout << is_differentiable<Polynomial<double>>::value << std::endl;

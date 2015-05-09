@@ -1,3 +1,6 @@
+#ifndef FUNCTIONAL_FUNCTIONALUTIL_H
+#define FUNCTIONAL_FUNCTIONALUTIL_H
+
 #include <vector>
 #include <iostream>
 
@@ -11,3 +14,5 @@ inline bool isMonotonic(const std::vector<T>& values) {
   }
   return true;
 }
+
+#endif // FUNCTIONAL_FUNCTIONALUTIL_H
