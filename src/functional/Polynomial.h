@@ -6,7 +6,7 @@
 #include <complex>
 #include <random>
 #include <unsupported/Eigen/Polynomials>
-#include "Typedefs.h"
+#include "FunctionalUtil.h"
 
 template <typename CoefficientType>
 class Polynomial

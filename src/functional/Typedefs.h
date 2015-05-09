@@ -5,12 +5,13 @@
 #ifndef FUNCTIONAL_TYPEDEFS_H
 #define FUNCTIONAL_TYPEDEFS_H
 
-#include <utility>
+#include <Eigen/Core>
+#include "Piecewise.h"
+#include "Sum.h"
+#include "LTIHomogeneousSolution.h"
+#include "Polynomial.h"
 
-template <typename Rhs, typename Lhs>
-using ProductType = decltype((Rhs) 0 * (Lhs) 0);
-
-template <typename Function, typename Arg> // TODO: variadic?
-using ResultType = decltype(std::declval<Function>().operator() (std::declval<Arg>()));
+template <typename CoefficientType, int NumStates, int NumOutputs>
+using LTIPiecewisePolySolution = Piecewise<Sum<LTIHomogeneousSolution<CoefficientType, NumStates, NumOutputs>, Eigen::Matrix<Polynomial<CoefficientType>, NumStates, 1> >, CoefficientType >;
 
 #endif //FUNCTIONAL_TYPEDEFS_H

@@ -10,5 +10,6 @@
 #include "functional/LTIHomogeneousSolution.h"
 #include "functional/Piecewise.h"
 #include "functional/Traits.h"
+#include "functional/Typedefs.h"
 
 #endif //FUNCTIONAL_FUNCTIONAL_H
