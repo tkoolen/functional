@@ -73,4 +73,7 @@ int main (int argc, char *argv[])
   testConstantValue<double>();
   testPiecewisePolynomial<double>();
   testPiecewisePolynomialMatrix<float>();
+
+  std::cout << is_differentiable<double>::value << std::endl;
+  std::cout << is_differentiable<Polynomial<double>>::value << std::endl;
 }

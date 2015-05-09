@@ -8,7 +8,6 @@
 #include <vector>
 #include <limits>
 #include "FunctionalUtil.h"
-#include "Typedefs.h"
 
 template<typename F, typename BreakType>
 class Piecewise
