@@ -14,14 +14,14 @@ void testIntegralAndDerivative() {
   Polynomial<CoefficientType> poly(coefficients);
   Polynomial<CoefficientType> third_derivative = poly.derivative(3);
   Polynomial<CoefficientType> third_derivative_check = poly.derivative().derivative().derivative();
-  valuecheckMatrix(third_derivative.getCoefficients(), third_derivative_check.getCoefficients(), 1e-14);
+  valueCheckMatrix(third_derivative.getCoefficients(), third_derivative_check.getCoefficients(), 1e-14);
 
   Polynomial<CoefficientType> tenth_derivative = poly.derivative(10);
-  valuecheckMatrix(tenth_derivative.getCoefficients(), VectorXd::Zero(1), 1e-14);
+  valueCheckMatrix(tenth_derivative.getCoefficients(), VectorXd::Zero(1), 1e-14);
 
   Polynomial<CoefficientType> integral = poly.integral(0.0);
   Polynomial<CoefficientType> poly_back = integral.derivative();
-  valuecheckMatrix(poly_back.getCoefficients(), poly.getCoefficients(), 1e-14);
+  valueCheckMatrix(poly_back.getCoefficients(), poly.getCoefficients(), 1e-14);
 }
 
 template <typename CoefficientType>
@@ -52,14 +52,14 @@ void testOperators() {
     poly1_times_poly1 *= poly1_times_poly1;
 
     double t = uniform(generator);
-    valuecheck(sum(t), poly1(t) + poly2(t), 1e-8);
-    valuecheck(difference(t), poly2(t) - poly1(t), 1e-8);
-    valuecheck(product(t), poly1(t) * poly2(t), 1e-8);
-    valuecheck(poly1_plus_scalar(t), poly1(t) + scalar, 1e-8);
-    valuecheck(poly1_minus_scalar(t), poly1(t) - scalar, 1e-8);
-    valuecheck(poly1_scaled(t), poly1(t) * scalar, 1e-8);
-    valuecheck(poly1_div(t), poly1(t) / scalar, 1e-8);
-    valuecheck(poly1_times_poly1(t), poly1(t) * poly1(t), 1e-8);
+    valueCheck(sum(t), poly1(t) + poly2(t), 1e-8);
+    valueCheck(difference(t), poly2(t) - poly1(t), 1e-8);
+    valueCheck(product(t), poly1(t) * poly2(t), 1e-8);
+    valueCheck(poly1_plus_scalar(t), poly1(t) + scalar, 1e-8);
+    valueCheck(poly1_minus_scalar(t), poly1(t) - scalar, 1e-8);
+    valueCheck(poly1_scaled(t), poly1(t) * scalar, 1e-8);
+    valueCheck(poly1_div(t), poly1(t) / scalar, 1e-8);
+    valueCheck(poly1_times_poly1(t), poly1(t) * poly1(t), 1e-8);
   }
 }
 
@@ -74,10 +74,10 @@ void testRoots() {
     VectorXd coeffs = VectorXd::Random(int_distribution(generator));
     Polynomial<CoefficientType> poly(coeffs);
     auto roots = poly.roots();
-    valuecheck<DenseIndex>(roots.rows(), poly.getDegree());
+    valueCheck<DenseIndex>(roots.rows(), poly.getDegree());
     for (int i = 0; i < roots.size(); i++) {
       auto value = poly(roots[i]);
-      valuecheck(std::abs(value), 0.0, 1e-8);
+      valueCheck(std::abs(value), 0.0, 1e-8);
     }
   }
 }
@@ -90,10 +90,10 @@ void testEvalType() {
   Polynomial<double> poly(coeffs);
 
   auto valueIntInput = poly(1);
-  valuecheck(typeid(decltype(valueIntInput)) == typeid(double), true);
+  valueCheck(typeid(decltype(valueIntInput)) == typeid(double), true);
 
   auto valueComplexInput = poly(std::complex<double>(1.0, 2.0));
-  valuecheck(typeid(decltype(valueComplexInput)) == typeid(std::complex<double>), true);
+  valueCheck(typeid(decltype(valueComplexInput)) == typeid(std::complex<double>), true);
 }
 
 template <typename CoefficientType>
@@ -118,7 +118,7 @@ void testPolynomialMatrix() {
   for (int row = 0; row < A.rows(); ++row) {
     for (int col = 0; col < A.cols(); ++col) {
       double t = uniform(generator);
-      valuecheck(sum(row, col)(t), A(row, col)(t) + C(row, col)(t), 1e-8);
+      valueCheck(sum(row, col)(t), A(row, col)(t) + C(row, col)(t), 1e-8);
     }
   }
 

@@ -37,7 +37,7 @@ std::string to_string(const Eigen::MatrixBase<Derived> & a)
 }
 
 template <typename T>
-void valuecheck(const T& a, const T& b)
+void valueCheck(const T& a, const T& b)
 {
   if (a != b) {
     std::ostringstream stream;
@@ -48,7 +48,7 @@ void valuecheck(const T& a, const T& b)
 
 /*
  * +++tk:
- * Note: can't call this function 'valuecheck' because it conflicts with our valuecheck template for general types above on GCC.
+ * Note: can't call this function 'valueCheck' because it conflicts with our valueCheck template for general types above on GCC.
  * (yes, even though the number of template arguments and the number of function arguments is different!)
  * It does compile on MSVC 2010 and Clang.
  * What I believe happens is that during argument-dependent name lookup, GCC instantiates Eigen::MatrixBase<int>, which causes errors deep in Eigen::internal code
@@ -77,12 +77,12 @@ void valuecheck(const T& a, const T& b)
  * }
  */
 template<typename DerivedA, typename DerivedB>
-void valuecheckMatrix(const Eigen::MatrixBase<DerivedA>& a, const Eigen::MatrixBase<DerivedB>& b, double tol, std::string error_msg = "")
+void valueCheckMatrix(const Eigen::MatrixBase<DerivedA>& a, const Eigen::MatrixBase<DerivedB>& b, double tol, std::string error_msg = "")
 {
   // note: isApprox uses the L2 norm, so is bad for comparing against zero
   if (a.rows() != b.rows() || a.cols() != b.cols()) {
     throw std::runtime_error(
-        "Drake:ValueCheck ERROR:" + error_msg + "size mismatch: (" + std::to_string(static_cast<unsigned long long>(a.rows())) + " by " + std::to_string(static_cast<unsigned long long>(a.cols())) + ") and (" + std::to_string(static_cast<unsigned long long>(b.rows())) + " by "
+        "Drake:valueCheck ERROR:" + error_msg + "size mismatch: (" + std::to_string(static_cast<unsigned long long>(a.rows())) + " by " + std::to_string(static_cast<unsigned long long>(a.cols())) + ") and (" + std::to_string(static_cast<unsigned long long>(b.rows())) + " by "
             + std::to_string(static_cast<unsigned long long>(b.cols())) + ")");
   }
   if (!(a - b).isZero(tol)) {
@@ -100,11 +100,11 @@ void valuecheckMatrix(const Eigen::MatrixBase<DerivedA>& a, const Eigen::MatrixB
         return;
     }
     error_msg += "A:\n" + to_string(a) + "\nB:\n" + to_string(b) + "\n";
-    throw std::runtime_error("Drake:ValueCheck ERROR:" + error_msg);
+    throw std::runtime_error("Drake:valueCheck ERROR:" + error_msg);
   }
 }
 
-void valuecheck(double a, double b, double tolerance)
+void valueCheck(double a, double b, double tolerance)
 {
   if (std::abs(a - b) > tolerance) {
     std::ostringstream stream;

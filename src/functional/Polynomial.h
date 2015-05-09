@@ -1,25 +1,24 @@
 #ifndef DRAKE_SOLVERS_POLYNOMIAL_POLYNOMIAL_H_
 #define DRAKE_SOLVERS_POLYNOMIAL_POLYNOMIAL_H_
 
+#include <functional>
 #include <Eigen/Core>
 #include <complex>
 #include <random>
 #include <unsupported/Eigen/Polynomials>
+#include "Typedefs.h"
 
-template <typename _CoefficientType = double>
+template <typename CoefficientType>
 class Polynomial
 {
 public:
-  typedef _CoefficientType CoefficientType;
   typedef typename Eigen::Matrix<CoefficientType, Eigen::Dynamic, 1> CoefficientsType;
   typedef typename Eigen::NumTraits<CoefficientType>::Real RealScalar;
   typedef std::complex<RealScalar> RootType;
   typedef Eigen::Matrix<RootType, Eigen::Dynamic, 1> RootsType;
-  
-  template<typename Rhs, typename Lhs>
-  struct Product {
-    typedef decltype((Rhs) 0 * (Lhs) 0) type;
-  };
+
+  template <typename T>
+  using ResultType = ProductType<CoefficientType, T>;
 
 private:
   CoefficientsType coefficients;
@@ -43,15 +42,15 @@ public:
   CoefficientsType const& getCoefficients() const;
 
   template<typename T> // can be different from both CoefficientsType and RealScalar
-  typename Product<CoefficientType, T>::type operator() (const T& t) const
+  ResultType<T> operator() (const T& t) const
   {
     // adapted from Eigen/unsupported
-    typedef typename Product<CoefficientType, T>::type ProductType;
     typedef typename Eigen::NumTraits<T>::Real Real;
+
     
     if (Eigen::numext::abs2(t) <= Real(1) ){
       // horner
-      ProductType val = coefficients[coefficients.size() - 1];
+      ResultType<T> val = coefficients[coefficients.size() - 1];
       for (Eigen::DenseIndex i = coefficients.size() - 2; i >= 0; --i) {
         val = val * t + coefficients[i];
       }
@@ -60,12 +59,12 @@ public:
     else
     {
       // stabilized horner
-      ProductType val = coefficients[0];
-      ProductType inv_x = T(1) / t;
+      ResultType<T> val = coefficients[0];
+      ResultType<T> inv_x = T(1) / t;
       for (Eigen::DenseIndex i = 1; i < coefficients.size(); ++i) {
         val = val * inv_x + coefficients[i];
       }
-      return std::pow(t, (ProductType) (static_cast<int>(coefficients.size() - 1))) * val;
+      return std::pow(t, (ResultType<T>) (static_cast<int>(coefficients.size() - 1))) * val;
     }    
   }
 
