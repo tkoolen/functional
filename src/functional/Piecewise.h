@@ -6,13 +6,15 @@
 #define FUNCTIONAL_PIECEWISE_H
 
 #include <vector>
+#include <limits>
 #include "FunctionalUtil.h"
 
 template<typename F, typename BreakType>
 class Piecewise
 {
 public:
-  typedef typename F::template ResultType<BreakType> ResultType;
+  template <typename T>
+  using ResultType = decltype(std::declval<F>().operator() (std::declval<T>()));
 
   std::vector<BreakType> breaks; // size n + 1
   std::vector<F> functions; // size n
@@ -23,8 +25,14 @@ public:
     assert(breaks.size() == functions.size() + 1);
   }
 
+  Piecewise(const F& value) :
+          breaks( {-std::numeric_limits<BreakType>::infinity(), std::numeric_limits<BreakType>::infinity()} )
+  {
+    functions.push_back(value);
+  }
+
   template <typename T>
-  ResultType operator()(const T &from) {
+  ResultType<T> operator()(const T &from) {
     size_t segment_index = segmentIndex(from);
     return functions[segment_index](from - breaks[segment_index]);
   }
@@ -53,6 +61,9 @@ public:
   inline bool inDomain(const BreakType &arg) {
     return arg >= breaks[0] && arg <= breaks[numberOfSegments()];
   }
+
+private:
+  Piecewise() {};
 };
 
 #endif //FUNCTIONAL_PIECEWISE_H
