@@ -8,6 +8,9 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get -qq install g++-4.8
 
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
 addons:
   apt:
     packages:
