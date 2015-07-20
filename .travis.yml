@@ -1,16 +1,17 @@
+sudo:false
+
 language: cpp
 
+os:
+  - osx
+
 compiler:
-  - gcc
+  - clang
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo add-apt-repository -y ppa:george-edison55/cmake-3.x
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install g++-4.8 cmake
-
-install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - brew update
+  - brew unlink cmake
+  - brew install cmake
 
 before_script:
   - mkdir build
