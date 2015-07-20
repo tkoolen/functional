@@ -15,7 +15,6 @@ addons:
   apt:
     packages:
     - cmake
-    - libeigen3-dev
 
 before_script:
   - mkdir build
