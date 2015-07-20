@@ -1,9 +1,11 @@
 enable_testing()
 
-add_executable(testPolynomial testPolynomial.cpp)
-target_link_libraries(testPolynomial functional)
-add_test(NAME testPolynomial COMMAND testPolynomial)
+macro(add_functional_test arg)
+  add_executable(${arg} ${arg}.cpp)
+  target_link_libraries(${arg} functional)
+  add_test(NAME ${arg} COMMAND ${arg})
+  add_dependencies(${arg} eigen)
+endmacro()
 
-add_executable(testPiecewisePolynomial testPiecewise.cpp)
-target_link_libraries(testPiecewisePolynomial functional)
-add_test(NAME testPiecewisePolynomial COMMAND testPiecewisePolynomial)
+add_functional_test(testPolynomial)
+add_functional_test(testPiecewise)

@@ -4,6 +4,13 @@ if(POLICY CMP0042)
 endif()
 project(Functional)
 
+include(ExternalProject)
+ExternalProject_Add(eigen
+  PREFIX eigen
+  URL https://bitbucket.org/eigen/eigen/get/3.2.4.tar.bz2
+  URL_HASH MD5=4c4b5ed9a388a1e475166d575af25477
+  CMAKE_ARGS -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} EIGEN_BUILD_PKGCONFIG=ON)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
