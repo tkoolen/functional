@@ -13,7 +13,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 include(CTest)
 enable_testing()
 find_program(MEMORYCHECK_COMMAND valgrind)
-set(MEMORYCHECK_COMMAND_OPTIONS "--tool=callgrind -v --trace-children=yes --leak-check=full")
+set(MEMORYCHECK_COMMAND_OPTIONS "-v --trace-children=yes --leak-check=full")
 
 #FIXME: hack due to https://youtrack.jetbrains.com/issue/CPP-270
 FILE (GLOB_RECURSE clion_all_headers ${CMAKE_SOURCE_DIR}/*.h)
