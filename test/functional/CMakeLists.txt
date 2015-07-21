@@ -4,7 +4,6 @@ macro(add_functional_test arg)
   add_executable(${arg} ${arg}.cpp)
   target_link_libraries(${arg} functional)
   add_test(NAME ${arg} COMMAND ${arg})
-  add_dependencies(${arg} eigen)
 endmacro()
 
 add_functional_test(testPolynomial)

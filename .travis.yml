@@ -15,8 +15,9 @@ before_install:
       && pwd
       && ls
       && sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+      && sudo apt-add-repository -y ppa:kalakris/eigen
       && sudo apt-get -qq update
-      && sudo apt-get -qq install g++-4.8
+      && sudo apt-get -qq install g++-4.8 eigen3
       && export CXX="g++-4.8"
       && export CC="gcc-4.8"
       ;
@@ -24,6 +25,7 @@ before_install:
          brew update
       && brew unlink cmake
       && brew install cmake
+      && brew install eigen
       ;
     fi
 
