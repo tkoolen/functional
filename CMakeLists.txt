@@ -10,6 +10,8 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
+enable_testing()
+
 #FIXME: hack due to https://youtrack.jetbrains.com/issue/CPP-270
 FILE (GLOB_RECURSE clion_all_headers ${CMAKE_SOURCE_DIR}/*.h)
 ADD_CUSTOM_TARGET(all_clion
