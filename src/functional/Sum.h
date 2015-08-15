@@ -21,8 +21,8 @@ public:
   }
 
   template <typename From>
-  auto operator() (const From& from) const -> decltype(std::declval<T1>() + std::declval<T2>()) {
-    return t1(from) + t2(from);
+  auto operator() (From&& from) const -> decltype(t1(std::forward<From>(from)) + t2(std::forward<From>(from))) {
+    return t1(std::forward<From>(from)) + t2(std::forward<From>(from));
   }
 };
 
