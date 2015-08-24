@@ -36,7 +36,7 @@ public:
   }
 
   template <typename T>
-  std::result_of<F(const T&)> operator()(const T &from) const {
+  ResultType<F, T> operator()(const T &from) const {
     size_t segment_index = segmentIndex(from);
     return functions[segment_index](from - breaks[segment_index]);
   }
@@ -99,11 +99,11 @@ auto weakDerivative(const Piecewise<F, BreakType>& fun) -> Piecewise<decltype(st
 
 template <typename F, typename BreakType, typename T>
 auto integral(const Piecewise<F, BreakType>& fun, const T& value_at_domain_start)
--> Piecewise<decltype(std::declval<F>().integral(std::declval<std::result_of<F(const T&)>>())), BreakType> {
-  typedef decltype(std::declval<F>().integral(std::declval<std::result_of<F(const T&)>>())) SubFunctionIntegralType;
+-> Piecewise<decltype(std::declval<F>().integral(std::declval<ResultType<F, T>>())), BreakType> {
+  typedef decltype(std::declval<F>().integral(std::declval<ResultType<F, T>>())) SubFunctionIntegralType;
   std::vector<SubFunctionIntegralType> subfunction_integrals;
   subfunction_integrals.reserve(fun.numberOfSegments());
-  std::result_of<F(const T&)> value_at_subfunction_domain_start = value_at_domain_start;
+  ResultType<F, T> value_at_subfunction_domain_start = value_at_domain_start;
   for (int i = 0; i < fun.functions.size(); i++) {
     const auto &subfunction = fun.functions[i];
     subfunction_integrals.push_back(subfunction.integral(value_at_subfunction_domain_start));

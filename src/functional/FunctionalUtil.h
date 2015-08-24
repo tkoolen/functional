@@ -17,4 +17,9 @@ inline bool isMonotonic(const std::vector<T>& values) {
 template <typename Rhs, typename Lhs>
 using ProductType = decltype((Rhs) 0 * (Lhs) 0);
 
+// should be using std::result_of, but doesn't work on GCC for some reason
+template <typename Function, typename Arg> // TODO: variadic?
+using ResultType = decltype(std::declval<Function>().operator() (std::declval<Arg>()));
+
+
 #endif // FUNCTIONAL_FUNCTIONALUTIL_H
