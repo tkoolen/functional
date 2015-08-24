@@ -8,3 +8,4 @@ endmacro()
 
 add_functional_test(testPolynomial)
 add_functional_test(testPiecewise)
+add_functional_test(testTraits)

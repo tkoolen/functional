@@ -9,7 +9,7 @@
 #include <limits>
 #include "FunctionalUtil.h"
 
-template<typename F, typename BreakType>
+template<typename F, typename BreakType = double>
 class Piecewise
 {
 public:
