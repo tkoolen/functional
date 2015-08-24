@@ -16,7 +16,7 @@ struct is_differentiable
 };
 
 template<class T>
-struct is_differentiable<T, typename std::enable_if<std::is_class<decltype(std::declval<T>().derivative())>{}>::type>
+struct is_differentiable<T, typename std::enable_if<!std::is_void<decltype(std::declval<T>().derivative())>{}>::type>
 {
   static const bool value = true;
 
