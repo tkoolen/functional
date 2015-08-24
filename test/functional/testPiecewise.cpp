@@ -9,7 +9,7 @@ default_random_engine engine;
 
 template <typename BreakType>
 Piecewise<Polynomial<double>, BreakType> createTestPiecewisePolynomial() {
-  vector<double> breaks = {(BreakType) 1, (BreakType) 2, (BreakType) 3};
+  vector<BreakType> breaks({1, 2, 3});
   vector<Polynomial<double>> functions;
   int num_coeffs = 3;
   for (int i = 1; i < breaks.size(); ++i) {
@@ -74,7 +74,4 @@ int main (int argc, char *argv[])
   testConstantValue<double>();
   testPiecewisePolynomial<double>();
 //  testPiecewisePolynomialMatrix<float>();
-
-  std::cout << is_differentiable<double>::value << std::endl;
-  std::cout << is_differentiable<Polynomial<double>>::value << std::endl;
 }

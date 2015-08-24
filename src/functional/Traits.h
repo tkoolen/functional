@@ -7,19 +7,20 @@
 
 #include <type_traits>
 
-template <typename T>
+template<class T, class Enable = void>
 struct is_differentiable
 {
-  template <class, class> class checker;
+  static const bool value = false;
 
-  template <typename C>
-  static std::true_type test(checker<C, decltype(&C::derivative)> *);
+  constexpr operator bool() const noexcept { return value; };
+};
 
-  template <typename C>
-  static std::false_type test(...);
+template<class T>
+struct is_differentiable<T, typename std::enable_if<std::is_class<decltype(std::declval<T>().derivative())>{}>::type>
+{
+  static const bool value = true;
 
-  typedef decltype(test<T>(nullptr)) type;
-  static const bool value = std::is_same<std::true_type, decltype(test<T>(nullptr))>::value;
+  constexpr const operator bool() const noexcept { return value; };
 };
 
 #endif //FUNCTIONAL_TRAITS_H

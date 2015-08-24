@@ -17,8 +17,4 @@ inline bool isMonotonic(const std::vector<T>& values) {
 template <typename Rhs, typename Lhs>
 using ProductType = decltype((Rhs) 0 * (Lhs) 0);
 
-template <typename Function, typename Arg> // TODO: variadic?
-using ResultType = decltype(std::declval<Function>().operator() (std::declval<Arg>()));
-
-
 #endif // FUNCTIONAL_FUNCTIONALUTIL_H
